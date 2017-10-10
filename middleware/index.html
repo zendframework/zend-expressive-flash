@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Flash messages for PSR-7 applications using zend-expressive-session">  
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <title>Flash Message Middleware - zend-expressive-flash</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/styles-482aa2add1.css">
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <span class="navbar-brand">
+                <a class="logo-link" href="https://framework.zend.com/" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../img/zf-logo-mark.svg" height="28" alt="Zend Framework" /></a>
+                <a href="..">zend-expressive-flash</a>
+            </span>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../intro/">Introduction</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../messages/">Flash Messages</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">Flash Message Middleware</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="component-toggle" data-toggle="tooltip" data-placement="bottom" title="Show component list">
+                        <i class="fa fa-book"></i> Components
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li>
+                        <a href="https://github.com/zendframework/zend-expressive-flash">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!-- content:begin -->
+    <div id="page-top" class="container docs">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#flash-message-middleware">Flash Message Middleware</a></li>
+        
+            <li><a href="#default-configuration">Default configuration</a></li>
+        
+            <li><a href="#custom-configuration">Custom configuration</a></li>
+        
+            <li><a href="#piping-the-middleware">Piping the middleware</a></li>
+        
+    
+    </ul>
+
+    
+</div></div>
+        <div class="col-md-9" role="main">
+
+<ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
+  <li><a href="..">zend-expressive-flash</a></li>
+  
+    
+  
+  <li class="active">Flash Message Middleware</li>
+</ol>
+
+<h1 id="flash-message-middleware">Flash Message Middleware</h1>
+<p>In order to provide flash messages to your middleware, you will first need to
+register <code>Zend\Expressive\Flash\FlashMessageMiddleware</code> in your application
+pipeline or routed middleware pipeline; additionally, you'll need to ensure
+<code>Zend\Expressive\Session\SessionMiddleware</code> is registered prior to it.</p>
+<p>This middleware does the following:</p>
+<ul>
+<li>Pulls the session container from the request via the attribute
+  <code>Zend\Expressive\Session\SessionMiddleware::SESSION_ATTRIBUTE</code> ("session").</li>
+<li>Passes the container, along with a defined session key, to a factory for
+  generating a <code>FlashMessagesInterface</code> instance.</li>
+<li>Passes that instance to a request that the delegate processes, using another
+  request attribute.</li>
+</ul>
+<h2 id="default-configuration">Default configuration</h2>
+<p>By default, <code>FlashMessageMiddleware</code> uses <code>FlashMessages::createFromSession()</code>
+to generate the flash messages container, the key
+<code>Zend\Expressive\Flash\FlashMessagesInterface::FLASH_NEXT</code> (this is a literal
+string) to pull stored flash messages from the session, and the request
+attribute <code>FlashMessageMiddleware::FLASH_ATTRIBUTE</code> ("flash") to pass the flash
+messages container to the next middleware.</p>
+<p>If you are using the <a href="https://docs.zendframework.com/zend-component-installer/">zend-component-installer</a>
+Composer plugin, the middleware will already be wired for you. Otherwise, you
+will need to map the middleware to your dependency injection container as an
+invokable (no constructor arguments).</p>
+<p>If these defaults will work for you, you have no further configuration to do.</p>
+<h2 id="custom-configuration">Custom configuration</h2>
+<p>If you want to specify a different flash messages container implementation, a
+different session key, or a different flash messages request attribute name, you
+will need to create a new factory for your <code>FlashMessagesMiddleware</code>. As an
+example, in the following, I specify:</p>
+<ul>
+<li><code>Application\FlashMessages</code> as the flash messages container; this class will
+  need to implement <code>FlashMessagesInterface</code>, including the static method
+  <code>createFromSession()</code>.</li>
+<li>The string <code>Application\FlashMessages::FLASH_NEXT</code> as the session key in which
+  flash messages will be stored.</li>
+<li>The request attribute <code>flash-messages</code> in which to store the flash messages
+  container.</li>
+</ul>
+<pre class="codehilite"><code class="language-php">use Application\FlashMessages;
+use Psr\Container\ContainerInterface;
+use Zend\Expressive\Flash\FlashMessageMiddleware;
+
+class FlashMessageMiddlewareFactory
+{
+    public function __invoke(ContainerInterface $container)
+    {
+        return new FlashMessageMiddleware(
+            FlashMessages::class,
+            FlashMessages::class . '::FLASH_NEXT',
+            'flash-messages'
+        );
+    }
+}</code></pre>
+
+
+<p>Once you have created this factory, map the <code>FlashMessageMiddleware</code> to it in
+your dependency injection configuration:</p>
+<pre class="codehilite"><code class="language-php">'dependencies' =&gt; [
+    'factories' =&gt; [
+        \Zend\Expressive\Flash\FlashMessageMiddleware::class =&gt; FlashMessageMiddlewareFactory::class,
+    ],
+],</code></pre>
+
+
+<h2 id="piping-the-middleware">Piping the middleware</h2>
+<p>You may pipe this middleware either in your application pipeline
+(<code>config/pipeline.php</code>) or a routed middleware pipeline (<code>config/routes.php</code>, or
+a delegator factory). When you do, you <strong>MUST</strong> register it <strong>AFTER</strong> the
+<code>Zend\Expressive\Session\SessionMiddleware</code> as it depends on that middleware for
+its session container.</p>
+<p>As an example within an application pipeline:</p>
+<pre class="codehilite"><code class="language-php">$app-&gt;pipe(\Zend\Expressive\Session\SessionMiddleware::class);
+$app-&gt;pipe(\Zend\Expressive\Flash\FlashMessageMiddleware::class);</code></pre>
+
+
+<p>Within a routed middleware definition:</p>
+<pre class="codehilite"><code class="language-php">$app-&gt;post('/user/login', [
+    \Zend\Expressive\Session\SessionMiddleware::class,
+    \Zend\Expressive\Flash\FlashMessageMiddleware::class,
+    LoginHandler::class,
+]);</code></pre>
+
+<hr />
+
+</div>
+        
+    </div>
+    <!-- content:end -->
+
+    <div id="footerwrap">
+    <div class="container">
+        <div class="row site-map">
+            <div class="col-lg-3">
+              <p>
+                <strong>Zend Framework</strong><br />
+                <a href="https://framework.zend.com/">framework.zend.com</a><br />
+                <a href="https://docs.zendframework.com">docs.zendframework.com</a><br />
+                <a href="https://packages.zendframework.com">packages.zendframework.com</a><br />
+                <a href="https://apigility.org">apigility.org</a><br />
+              </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 centered">
+                <a class="back-to-top" href="#page-top"><i class="fa fa-chevron-circle-up fa-4" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="spacing"></div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h4>Copyright</h4>
+                <div class="hline-w"></div>
+
+                <p>&copy; 2006-2017 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+            </div>
+
+            <div class="col-lg-4">
+                <h4>Contacts</h4>
+                <div class="hline-w"></div>
+                <p>
+                    <a href="https://discourse.zendframework.com" class="btn-social btn-outline" alt="Forum" title="Forum"><i class="fa fa-comments"></i></a>
+                    <a href="https://zendframework-slack.herokuapp.com" class="btn-social btn-outline" alt="Slack" title="Slack"><i class="fa fa-slack"></i></a>
+                    <a href="https://github.com/zendframework" class="btn-social btn-outline" alt="Github" title="Github"><i class="fa fa-github"></i></a>
+                    <a href="https://twitter.com/zfdevteam" class="btn-social btn-outline" alt="Twitter" title="Twitter"><i class="fa fa-twitter"></i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/scripts-019f7ac1f7.js"></script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="zf-components">
+  <div class="zf-components-grid">
+    <div class="zf-logo">
+      <a href="https://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../img/zf-logo-mark.svg" alt="Zend Framework" width="250" /></a>
+    </div>
+
+    <div class="component-list"></div>
+
+    <p class="zf-components-rollup"><a href="#">Hide list</a></p>
+  </div>
+</div>
+
+</body>
+
+</html>

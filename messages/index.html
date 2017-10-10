@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Flash messages for PSR-7 applications using zend-expressive-session">  
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <title>Flash Messages - zend-expressive-flash</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/styles-482aa2add1.css">
+
+    
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <span class="navbar-brand">
+                <a class="logo-link" href="https://framework.zend.com/" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../img/zf-logo-mark.svg" height="28" alt="Zend Framework" /></a>
+                <a href="..">zend-expressive-flash</a>
+            </span>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../intro/">Introduction</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">Flash Messages</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../middleware/">Flash Message Middleware</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" class="component-toggle" data-toggle="tooltip" data-placement="bottom" title="Show component list">
+                        <i class="fa fa-book"></i> Components
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li>
+                        <a href="https://github.com/zendframework/zend-expressive-flash">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <!-- content:begin -->
+    <div id="page-top" class="container docs">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#flash-messages">Flash Messages</a></li>
+        
+            <li><a href="#usage">Usage</a></li>
+        
+            <li><a href="#hops">Hops</a></li>
+        
+            <li><a href="#accessing-messages-in-the-current-request">Accessing messages in the current request</a></li>
+        
+    
+    </ul>
+
+    
+    <ul class="pager hidden-print">
+      <li class="previous">
+        <a rel="prev" href="../intro/"><i class="fa fa-arrow-left"></i> Previous</a>
+      </li>
+      <li class="next">
+        <a rel="next" href="../middleware/">Next <i class="fa fa-arrow-right"></i></a>
+      </li>
+    </ul>
+    
+</div></div>
+        <div class="col-md-9" role="main">
+
+<ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
+  <li><a href="..">zend-expressive-flash</a></li>
+  
+    
+  
+  <li class="active">Flash Messages</li>
+</ol>
+
+<h1 id="flash-messages">Flash Messages</h1>
+<p>Flash messages are contained within a <code>Zend\Expressive\Flash\FlashMessagesInterface</code>
+implementation. That interface is defined as follows:</p>
+<pre class="codehilite"><code class="language-php">namespace Zend\Expressive\Flash;
+
+use Zend\Expressive\Session\SessionInterface;
+
+interface FlashMessagesInterface
+{
+    /**
+     * Flash values scheduled for next request.
+     */
+    const FLASH_NEXT = self::class . '::FLASH_NEXT';
+
+    /**
+     * Create an instance from a session container.
+     *
+     * Flash messages will be retrieved from and persisted to the session via
+     * the `$sessionKey`.
+     */
+    public static function createFromSession(
+        SessionInterface $session,
+        string $sessionKey = self::FLASH_NEXT
+    ) : FlashMessagesInterface;
+
+    /**
+     * Set a flash value with the given key.
+     *
+     * Flash values are accessible on the next &quot;hop&quot;, where a hop is the
+     * next time the session is accessed; you may pass an additional $hops
+     * integer to allow access for more than one hop.
+     *
+     * @param mixed $value
+     */
+    public function flash(string $key, $value, int $hops = 1) : void;
+
+    /**
+     * Set a flash value with the given key, but allow access during this request.
+     *
+     * Flash values are generally accessible only on subsequent requests;
+     * using this method, you may make the value available during the current
+     * request as well.
+     *
+     * @param mixed $value
+     */
+    public function flashNow(string $key, $value, int $hops = 1) : void;
+
+    /**
+     * Retrieve a flash value.
+     *
+     * Will return a value only if a flash value was set in a previous request,
+     * or if `flashNow()` was called in this request with the same `$key`.
+     *
+     * WILL NOT return a value if set in the current request via `flash()`.
+     *
+     * @param mixed $default Default value to return if no flash value exists.
+     * @return mixed
+     */
+    public function getFlash(string $key, $default = null);
+
+    /**
+     * Clear all flash values.
+     *
+     * Affects the next and subsequent requests.
+     */
+    public function clearFlash() : void;
+
+    /**
+     * Prolongs any current flash messages for one more hop.
+     */
+    public function prolongFlash() : void;
+}</code></pre>
+
+
+<p>A default implementation is provided in the class
+<code>Zend\Expressive\Flash\FlashMessages</code>, but you may implement the interface
+yourself if you have special needs that fall outside this standard
+implementation.</p>
+<p>The instance will generally be injected into your request under the attribute
+<code>Zend\Expressive\Flash\FlashMessageMiddleware::FLASH_ATTRIBUTE</code>, which evaluates
+to <code>flash</code>.</p>
+<h2 id="usage">Usage</h2>
+<p>First, pull the flash messages from the request:</p>
+<pre class="codehilite"><code class="language-php">$flashMessages = $request-&gt;getAttribute(FlashMessageMiddleware::FLASH_ATTRIBUTE);
+
+// or
+$flashMessages = $request-&gt;getAttribute('flash');</code></pre>
+
+
+<p>To create a flash message for the next request:</p>
+<pre class="codehilite"><code class="language-php">$flashMessages-&gt;flash($messageName, $messageValue);</code></pre>
+
+
+<p>To retrieve a message you previously flashed:</p>
+<pre class="codehilite"><code class="language-php">$message = $flashMessages-&gt;getFlash($messageName);</code></pre>
+
+
+<h2 id="hops">Hops</h2>
+<p>Sometimes you may want a flash message to persist for longer than a single
+request. As an example, with a multi-page form, you may want to store messages
+until all pages have been filled.</p>
+<p>zend-expressive-flash allows you to specify <em>hops</em>, indicating how many requests
+the flash message will persist for. The default value is <code>1</code>, indicating a
+single hop. This value is provided when you call <code>flash()</code> as an optional third
+argument.</p>
+<p>To have a message persist for three "hops", you might call <code>flash()</code> as follows:</p>
+<pre class="codehilite"><code class="language-php">$flashMessages-&gt;flash($messageName, $messageValue, 3);</code></pre>
+
+
+<p>Sometimes you may want to ensure all messages persist for one more hop. To do
+that:</p>
+<pre class="codehilite"><code class="language-php">$flashMessages-&gt;prolongFlash();</code></pre>
+
+
+<p>If you want to clear all flash methods, no matter the number of hops:</p>
+<pre class="codehilite"><code class="language-php">$flashMessages-&gt;clearFlash();</code></pre>
+
+
+<p>Note, however, that this clears them for the <em>next request</em>, not the current
+one.</p>
+<h2 id="accessing-messages-in-the-current-request">Accessing messages in the current request</h2>
+<p>When you create a flash message, it is available <em>in the next request</em>, but not
+the <em>current request</em>. If you want access to it in the current request as well,
+use the <code>flashNow()</code> method instead of <code>flash()</code>:</p>
+<pre class="codehilite"><code class="language-php">$flashMessages-&gt;flashNow($messageName, $messageValue);</code></pre>
+
+
+<p>The signature of this method is the same as for <code>flash()</code>, and allows you to
+optionally provide a <code>$hops</code> value as well.</p>
+
+<hr />
+
+
+<nav>
+  <ul class="pager hidden-print">
+    <li class="previous">
+      <a rel="prev" href="../intro/"><i class="fa fa-arrow-left"></i> Previous</a>
+    </li>
+    <li class="next">
+      <a rel="next" href="../middleware/">Next <i class="fa fa-arrow-right"></i></a>
+    </li>
+  </ul>
+</nav>
+</div>
+        
+    </div>
+    <!-- content:end -->
+
+    <div id="footerwrap">
+    <div class="container">
+        <div class="row site-map">
+            <div class="col-lg-3">
+              <p>
+                <strong>Zend Framework</strong><br />
+                <a href="https://framework.zend.com/">framework.zend.com</a><br />
+                <a href="https://docs.zendframework.com">docs.zendframework.com</a><br />
+                <a href="https://packages.zendframework.com">packages.zendframework.com</a><br />
+                <a href="https://apigility.org">apigility.org</a><br />
+              </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 centered">
+                <a class="back-to-top" href="#page-top"><i class="fa fa-chevron-circle-up fa-4" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="spacing"></div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h4>Copyright</h4>
+                <div class="hline-w"></div>
+
+                <p>&copy; 2006-2017 by <a href="https://www.zend.com/">Zend</a>, a <a href="https://www.roguewave.com/">Rogue Wave Company</a>.</p>
+            </div>
+
+            <div class="col-lg-4">
+                <h4>Contacts</h4>
+                <div class="hline-w"></div>
+                <p>
+                    <a href="https://discourse.zendframework.com" class="btn-social btn-outline" alt="Forum" title="Forum"><i class="fa fa-comments"></i></a>
+                    <a href="https://zendframework-slack.herokuapp.com" class="btn-social btn-outline" alt="Slack" title="Slack"><i class="fa fa-slack"></i></a>
+                    <a href="https://github.com/zendframework" class="btn-social btn-outline" alt="Github" title="Github"><i class="fa fa-github"></i></a>
+                    <a href="https://twitter.com/zfdevteam" class="btn-social btn-outline" alt="Twitter" title="Twitter"><i class="fa fa-twitter"></i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/scripts-019f7ac1f7.js"></script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="zf-components">
+  <div class="zf-components-grid">
+    <div class="zf-logo">
+      <a href="https://framework.zend.com" data-toggle="tooltip" data-placement="bottom" title="Go to the ZF homepage"><img src="../img/zf-logo-mark.svg" alt="Zend Framework" width="250" /></a>
+    </div>
+
+    <div class="component-list"></div>
+
+    <p class="zf-components-rollup"><a href="#">Hide list</a></p>
+  </div>
+</div>
+
+</body>
+
+</html>
