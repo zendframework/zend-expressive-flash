@@ -7,12 +7,14 @@
 
 namespace Zend\Expressive\Flash;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Webimpress\HttpMiddlewareCompatibility\HandlerInterface as DelegateInterface;
+use Webimpress\HttpMiddlewareCompatibility\MiddlewareInterface;
 use Zend\Expressive\Session\SessionInterface;
 use Zend\Expressive\Session\SessionMiddleware;
+
+use const Webimpress\HttpMiddlewareCompatibility\HANDLER_METHOD;
 
 class FlashMessageMiddleware implements MiddlewareInterface
 {
@@ -58,6 +60,6 @@ class FlashMessageMiddleware implements MiddlewareInterface
 
         $flashMessages = ($this->flashMessageFactory)($session, $this->sessionKey);
 
-        return $delegate->process($request->withAttribute($this->attributeKey, $flashMessages));
+        return $delegate->{HANDLER_METHOD}($request->withAttribute($this->attributeKey, $flashMessages));
     }
 }
