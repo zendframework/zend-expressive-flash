@@ -70,6 +70,7 @@ class FlashMessages implements FlashMessagesInterface
      * integer to allow access for more than one hop.
      *
      * @param mixed $value
+     * @throws Exception\InvalidHopsValueException
      */
     public function flash(string $key, $value, int $hops = 1) : void
     {
