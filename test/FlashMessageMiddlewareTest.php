@@ -7,17 +7,19 @@
 
 namespace ZendTest\Expressive\Flash;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use stdClass;
+use Webimpress\HttpMiddlewareCompatibility\HandlerInterface as DelegateInterface;
 use Zend\Expressive\Flash\Exception;
 use Zend\Expressive\Flash\FlashMessageMiddleware;
 use Zend\Expressive\Flash\FlashMessagesInterface;
 use Zend\Expressive\Session\SessionInterface;
 use Zend\Expressive\Session\SessionMiddleware;
+
+use const Webimpress\HttpMiddlewareCompatibility\HANDLER_METHOD;
 
 class FlashMessageMiddlewareTest extends TestCase
 {
@@ -45,7 +47,7 @@ class FlashMessageMiddlewareTest extends TestCase
         )->shouldNotBeCalled();
 
         $delegate = $this->prophesize(DelegateInterface::class);
-        $delegate->process(Argument::type(ServerRequestInterface::class))->shouldNotBeCalled();
+        $delegate->{HANDLER_METHOD}(Argument::type(ServerRequestInterface::class))->shouldNotBeCalled();
 
         $middleware = new FlashMessageMiddleware();
 
@@ -73,7 +75,7 @@ class FlashMessageMiddlewareTest extends TestCase
         $response = $this->prophesize(ResponseInterface::class)->reveal();
 
         $delegate = $this->prophesize(DelegateInterface::class);
-        $delegate->process(Argument::that([$request, 'reveal']))->willReturn($response);
+        $delegate->{HANDLER_METHOD}(Argument::that([$request, 'reveal']))->willReturn($response);
 
         $middleware = new FlashMessageMiddleware(
             TestAsset\FlashMessages::class,
