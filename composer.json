@@ -13,17 +13,6 @@
         "zendframework",
         "zend-expressive"
     ],
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        },
-        "zf": {
-            "config-provider": "Zend\\Expressive\\Flash\\ConfigProvider"
-        }
-    },
     "support": {
         "docs": "https://docs.zendframework.com/zend-expressive-flash/",
         "issues": "https://github.com/zendframework/zend-expressive-flash/issues",
@@ -52,6 +41,17 @@
     "autoload-dev": {
         "psr-4": {
             "ZendTest\\Expressive\\Flash\\": "test/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "zf": {
+            "config-provider": "Zend\\Expressive\\Flash\\ConfigProvider"
         }
     },
     "scripts": {
