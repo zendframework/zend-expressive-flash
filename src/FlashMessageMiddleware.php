@@ -18,7 +18,7 @@ use Zend\Expressive\Session\SessionMiddleware;
 
 class FlashMessageMiddleware implements MiddlewareInterface
 {
-    const FLASH_ATTRIBUTE = 'flash';
+    public const FLASH_ATTRIBUTE = 'flash';
 
     /**
      * @var string
