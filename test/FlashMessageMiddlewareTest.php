@@ -5,6 +5,8 @@
  * @license   https://github.com/zendframework/zend-expressive-flash/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace ZendTest\Expressive\Flash;
 
 use Interop\Http\Server\RequestHandlerInterface;

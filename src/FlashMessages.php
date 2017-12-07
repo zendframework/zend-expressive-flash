@@ -5,6 +5,8 @@
  * @license   https://github.com/zendframework/zend-expressive-flash/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Zend\Expressive\Flash;
 
 use Zend\Expressive\Session\SessionInterface;
