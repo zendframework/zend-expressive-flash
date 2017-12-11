@@ -1,13 +1,15 @@
 <?php
 /**
  * @see       https://github.com/zendframework/zend-expressive-flash for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (https://www.zend.com)
  * @license   https://github.com/zendframework/zend-expressive-flash/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace ZendTest\Expressive\Flash;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
+use Interop\Http\Server\RequestHandlerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
@@ -44,18 +46,18 @@ class FlashMessageMiddlewareTest extends TestCase
             Argument::type(FlashMessagesInterface::class)
         )->shouldNotBeCalled();
 
-        $delegate = $this->prophesize(DelegateInterface::class);
-        $delegate->process(Argument::type(ServerRequestInterface::class))->shouldNotBeCalled();
+        $handler = $this->prophesize(RequestHandlerInterface::class);
+        $handler->handle(Argument::type(ServerRequestInterface::class))->shouldNotBeCalled();
 
         $middleware = new FlashMessageMiddleware();
 
         $this->expectException(Exception\MissingSessionException::class);
         $this->expectExceptionMessage(FlashMessageMiddleware::class);
 
-        $middleware->process($request->reveal(), $delegate->reveal());
+        $middleware->process($request->reveal(), $handler->reveal());
     }
 
-    public function testProcessUsesConfiguredClassAndSessionKeyAndAttributeKeyToCreateFlashMessagesAndPassToDelegate()
+    public function testProcessUsesConfiguredClassAndSessionKeyAndAttributeKeyToCreateFlashMessagesAndPassToHandler()
     {
         $session = $this->prophesize(SessionInterface::class)->reveal();
 
@@ -72,8 +74,8 @@ class FlashMessageMiddlewareTest extends TestCase
 
         $response = $this->prophesize(ResponseInterface::class)->reveal();
 
-        $delegate = $this->prophesize(DelegateInterface::class);
-        $delegate->process(Argument::that([$request, 'reveal']))->willReturn($response);
+        $handler = $this->prophesize(RequestHandlerInterface::class);
+        $handler->handle(Argument::that([$request, 'reveal']))->willReturn($response);
 
         $middleware = new FlashMessageMiddleware(
             TestAsset\FlashMessages::class,
@@ -83,7 +85,7 @@ class FlashMessageMiddlewareTest extends TestCase
 
         $this->assertSame(
             $response,
-            $middleware->process($request->reveal(), $delegate->reveal())
+            $middleware->process($request->reveal(), $handler->reveal())
         );
     }
 }
