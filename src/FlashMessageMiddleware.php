@@ -39,7 +39,7 @@ class FlashMessageMiddleware implements MiddlewareInterface
         string $attributeKey = self::FLASH_ATTRIBUTE
     ) {
         if (! class_exists($flashMessagesClass)
-            || ! in_array(FlashMessagesInterface::class, class_implements($flashMessagesClass))
+            || ! in_array(FlashMessagesInterface::class, class_implements($flashMessagesClass), true)
         ) {
             throw Exception\InvalidFlashMessagesImplementationException::forClass($flashMessagesClass);
         }
