@@ -145,16 +145,13 @@ successfully completing a form. I can do that with flash messages.</p>
 <p>When processing, I would create the message in my middleware:</p>
 <pre class="codehilite"><code class="language-php">$flashMessages-&gt;flash('form-complete', 'Thank you; your submission was recorded.');</code></pre>
 
-
 <p>On the subsequent request, my middleware would pull that message:</p>
 <pre class="codehilite"><code class="language-php">$message = $flashMessages-&gt;getFlash('form-complete');</code></pre>
-
 
 <p>On any subsequent requests, the message is no longer available!</p>
 <h2 id="installation">Installation</h2>
 <p>To use the component, install via <a href="https://getcomposer.org">Composer</a>:</p>
 <pre class="codehilite"><code class="language-bash">$ composer require zendframework/zend-expressive-flash</code></pre>
-
 
 <blockquote>
 <h3 id="persistence-required">Persistence required</h3>
@@ -232,7 +229,7 @@ be available soon.</p>
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
     <script>var base_url = '..';</script>
-    <script src="../js/scripts-019f7ac1f7.js"></script>
+    <script src="../js/scripts-0b6185f4a5.js"></script>
     <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
 
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

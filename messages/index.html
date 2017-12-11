@@ -212,7 +212,6 @@ interface FlashMessagesInterface
     public function prolongFlash() : void;
 }</code></pre>
 
-
 <p>A default implementation is provided in the class
 <code>Zend\Expressive\Flash\FlashMessages</code>, but you may implement the interface
 yourself if you have special needs that fall outside this standard
@@ -227,14 +226,11 @@ to <code>flash</code>.</p>
 // or
 $flashMessages = $request-&gt;getAttribute('flash');</code></pre>
 
-
 <p>To create a flash message for the next request:</p>
 <pre class="codehilite"><code class="language-php">$flashMessages-&gt;flash($messageName, $messageValue);</code></pre>
 
-
 <p>To retrieve a message you previously flashed:</p>
 <pre class="codehilite"><code class="language-php">$message = $flashMessages-&gt;getFlash($messageName);</code></pre>
-
 
 <h2 id="hops">Hops</h2>
 <p>Sometimes you may want a flash message to persist for longer than a single
@@ -247,15 +243,12 @@ argument.</p>
 <p>To have a message persist for three "hops", you might call <code>flash()</code> as follows:</p>
 <pre class="codehilite"><code class="language-php">$flashMessages-&gt;flash($messageName, $messageValue, 3);</code></pre>
 
-
 <p>Sometimes you may want to ensure all messages persist for one more hop. To do
 that:</p>
 <pre class="codehilite"><code class="language-php">$flashMessages-&gt;prolongFlash();</code></pre>
 
-
 <p>If you want to clear all flash methods, no matter the number of hops:</p>
 <pre class="codehilite"><code class="language-php">$flashMessages-&gt;clearFlash();</code></pre>
-
 
 <p>Note, however, that this clears them for the <em>next request</em>, not the current
 one.</p>
@@ -264,7 +257,6 @@ one.</p>
 the <em>current request</em>. If you want access to it in the current request as well,
 use the <code>flashNow()</code> method instead of <code>flash()</code>:</p>
 <pre class="codehilite"><code class="language-php">$flashMessages-&gt;flashNow($messageName, $messageValue);</code></pre>
-
 
 <p>The signature of this method is the same as for <code>flash()</code>, and allows you to
 optionally provide a <code>$hops</code> value as well.</p>
@@ -334,7 +326,7 @@ optionally provide a <code>$hops</code> value as well.</p>
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
     <script>var base_url = '..';</script>
-    <script src="../js/scripts-019f7ac1f7.js"></script>
+    <script src="../js/scripts-0b6185f4a5.js"></script>
     <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
 
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
