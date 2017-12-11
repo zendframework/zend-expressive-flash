@@ -25,14 +25,14 @@ class FlashMessageMiddlewareTest extends TestCase
     {
         $this->expectException(Exception\InvalidFlashMessagesImplementationException::class);
         $this->expectExceptionMessage('not-a-class');
-        $middleare = new FlashMessageMiddleware('not-a-class');
+        new FlashMessageMiddleware('not-a-class');
     }
 
     public function testConstructorRaisesExceptionIfFlashMessagesClassDoesNotImplementCorrectInterface()
     {
         $this->expectException(Exception\InvalidFlashMessagesImplementationException::class);
         $this->expectExceptionMessage('stdClass');
-        $middleare = new FlashMessageMiddleware(stdClass::class);
+        new FlashMessageMiddleware(stdClass::class);
     }
 
     public function testProcessRaisesExceptionIfRequestSessionAttributeDoesNotReturnSessionInterface()
