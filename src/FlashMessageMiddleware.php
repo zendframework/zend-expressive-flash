@@ -1,14 +1,16 @@
 <?php
 /**
  * @see       https://github.com/zendframework/zend-expressive-flash for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (https://www.zend.com)
  * @license   https://github.com/zendframework/zend-expressive-flash/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Zend\Expressive\Flash;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Interop\Http\Server\MiddlewareInterface;
+use Interop\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Expressive\Session\SessionInterface;
@@ -16,7 +18,7 @@ use Zend\Expressive\Session\SessionMiddleware;
 
 class FlashMessageMiddleware implements MiddlewareInterface
 {
-    const FLASH_ATTRIBUTE = 'flash';
+    public const FLASH_ATTRIBUTE = 'flash';
 
     /**
      * @var string
@@ -49,7 +51,7 @@ class FlashMessageMiddleware implements MiddlewareInterface
         $this->attributeKey = $attributeKey;
     }
 
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE, false);
         if (! $session instanceof SessionInterface) {
@@ -58,6 +60,6 @@ class FlashMessageMiddleware implements MiddlewareInterface
 
         $flashMessages = ($this->flashMessageFactory)($session, $this->sessionKey);
 
-        return $delegate->process($request->withAttribute($this->attributeKey, $flashMessages));
+        return $handler->handle($request->withAttribute($this->attributeKey, $flashMessages));
     }
 }

@@ -13,7 +13,7 @@ interface FlashMessagesInterface
     /**
      * Flash values scheduled for next request.
      */
-    const FLASH_NEXT = self::class . '::FLASH_NEXT';
+    public const FLASH_NEXT = self::class . '::FLASH_NEXT';
 
     /**
      * Create an instance from a session container.
