@@ -65,6 +65,19 @@ interface FlashMessagesInterface
     public function getFlash(string $key, $default = null);
 
     /**
+     * Retrieve all flash values.
+     *
+     * Will return all values was set in a previous request, or if `flashNow()`
+     * was called in this request with the same `$key`.
+     *
+     * WILL NOT return values set in the current request via `flash()`.
+     *
+     * @param mixed $default Default value to return if no flash value exists.
+     * @return mixed
+     */
+    public function getFlashes() : array;
+
+    /**
      * Clear all flash values.
      *
      * Affects the next and subsequent requests.

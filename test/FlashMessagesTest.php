@@ -53,6 +53,7 @@ class FlashMessagesTest extends TestCase
 
         $this->assertSame('value1', $flash->getFlash('test'));
         $this->assertSame('value2', $flash->getFlash('test-2'));
+        $this->assertSame(['test' => 'value1', 'test-2' => 'value2'], $flash->getFlashes());
     }
 
     public function testCreationAggregatesPersistsItemsWithMultipleHopsInSessionWithDecrementedHops()
@@ -85,6 +86,7 @@ class FlashMessagesTest extends TestCase
 
         $this->assertSame('value1', $flash->getFlash('test'));
         $this->assertSame('value2', $flash->getFlash('test-2'));
+        $this->assertSame(['test' => 'value1', 'test-2' => 'value2'], $flash->getFlashes());
     }
 
     public function testFlashingAValueMakesItAvailableInNextSessionButNotFlashMessages()
@@ -108,6 +110,7 @@ class FlashMessagesTest extends TestCase
         $flash->flash('test', 'value');
 
         $this->assertNull($flash->getFlash('test'));
+        $this->assertSame([], $flash->getFlashes());
     }
 
     public function testFlashNowMakesValueAvailableBothInNextSessionAndCurrentFlashMessages()
@@ -131,6 +134,7 @@ class FlashMessagesTest extends TestCase
         $flash->flashNow('test', 'value');
 
         $this->assertSame('value', $flash->getFlash('test'));
+        $this->assertSame(['test' => 'value'], $flash->getFlashes());
     }
 
     public function testProlongFlashAddsCurrentMessagesToNextSession()
@@ -180,6 +184,7 @@ class FlashMessagesTest extends TestCase
 
         $this->assertSame('value1', $flash->getFlash('test'));
         $this->assertSame('value2', $flash->getFlash('test-2'));
+        $this->assertSame(['test' => 'value1', 'test-2' => 'value2'], $flash->getFlashes());
 
         $flash->prolongFlash();
     }
@@ -219,6 +224,7 @@ class FlashMessagesTest extends TestCase
 
         $this->assertSame('value1', $flash->getFlash('test'));
         $this->assertSame('value2', $flash->getFlash('test-2'));
+        $this->assertSame(['test' => 'value1', 'test-2' => 'value2'], $flash->getFlashes());
 
         $flash->prolongFlash();
     }
@@ -254,6 +260,7 @@ class FlashMessagesTest extends TestCase
 
         $this->assertSame('value1', $flash->getFlash('test'));
         $this->assertSame('value2', $flash->getFlash('test-2'));
+        $this->assertSame(['test' => 'value1', 'test-2' => 'value2'], $flash->getFlashes());
         $flash->clearFlash();
     }
 }

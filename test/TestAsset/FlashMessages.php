@@ -42,6 +42,10 @@ class FlashMessages implements FlashMessagesInterface
     {
     }
 
+    public function getFlashes() : array
+    {
+    }
+
     public function clearFlash() : void
     {
     }
