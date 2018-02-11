@@ -7,7 +7,8 @@
 
 namespace Zend\Expressive\Flash\Exception;
 
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
+
 use RuntimeException;
 
 class MissingSessionException extends RuntimeException implements ExceptionInterface
