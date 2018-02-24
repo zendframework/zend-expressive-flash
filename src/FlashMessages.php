@@ -120,6 +120,21 @@ class FlashMessages implements FlashMessagesInterface
     }
 
     /**
+     * Retrieve all flash values.
+     *
+     * Will return all values was set in a previous request, or if `flashNow()`
+     * was called in this request.
+     *
+     * WILL NOT return values set in the current request via `flash()`.
+     *
+     * @return array
+     */
+    public function getFlashes() : array
+    {
+        return $this->currentMessages;
+    }
+
+    /**
      * Clear all flash values.
      *
      * Affects the next and subsequent requests.
