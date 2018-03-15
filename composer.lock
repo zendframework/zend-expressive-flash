@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7095dc41168bc41fb17ce652108c893",
+    "content-hash": "6a975bb350f8b27817c45fb79ea0b110",
     "packages": [
         {
             "name": "psr/container",
@@ -213,16 +213,16 @@
         },
         {
             "name": "zendframework/zend-expressive-session",
-            "version": "1.0.0alpha1",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session.git",
-                "reference": "fd6c03326362c0930fc09bd59ba03259170c27ce"
+                "reference": "632fba38f01e884bb788ac3baf529d41458d75a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session/zipball/fd6c03326362c0930fc09bd59ba03259170c27ce",
-                "reference": "fd6c03326362c0930fc09bd59ba03259170c27ce",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session/zipball/632fba38f01e884bb788ac3baf529d41458d75a4",
+                "reference": "632fba38f01e884bb788ac3baf529d41458d75a4",
                 "shasum": ""
             },
             "require": {
@@ -245,8 +245,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev",
-                    "dev-release-1.0.0": "1.0.x-dev"
+                    "dev-master": "1.0.x-dev",
+                    "dev-develop": "1.1.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\Session\\ConfigProvider"
@@ -271,7 +271,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-02-07T20:05:41+00:00"
+            "time": "2018-03-15T14:36:37+00:00"
         }
     ],
     "packages-dev": [
@@ -1839,9 +1839,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "zendframework/zend-expressive-session": 15
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

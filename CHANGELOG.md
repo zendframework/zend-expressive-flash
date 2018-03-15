@@ -2,36 +2,16 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.0.0alpha2 - 2018-02-24
-
-### Added
-
-- [#6](https://github.com/zendframework/zend-expressive-flash/pull/6) adds
-  the FlashMessages::getFlashes() method to retrievs an array with all
-  messages for the current request.
-
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 1.0.0alpha1 - 2018-02-07
+## 1.0.0 - 2018-03-15
 
 ### Added
 
 - [#5](https://github.com/zendframework/zend-expressive-flash/pull/5) adds
   support for PSR-15 interfaces.
+
+- [#6](https://github.com/zendframework/zend-expressive-flash/pull/6) adds
+  the FlashMessages::getFlashes() method to retrievs an array with all
+  messages for the current request.
 
 ### Changed
 
