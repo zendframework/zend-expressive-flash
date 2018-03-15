@@ -11,6 +11,8 @@ namespace Zend\Expressive\Flash;
 
 use Zend\Expressive\Session\SessionInterface;
 
+use function is_array;
+
 /**
  * Create, retrieve, and manipulate flash messages.
  *

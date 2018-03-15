@@ -13,6 +13,8 @@ use InvalidArgumentException;
 use Zend\Expressive\Flash\FlashMessageMiddleware;
 use Zend\Expressive\Flash\FlashMessagesInterface;
 
+use function sprintf;
+
 class InvalidFlashMessagesImplementationException extends InvalidArgumentException implements ExceptionInterface
 {
     public static function forClass(string $class) : self
