@@ -16,6 +16,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Expressive\Session\SessionInterface;
 use Zend\Expressive\Session\SessionMiddleware;
 
+use function class_exists;
+use function class_implements;
+use function in_array;
+
 class FlashMessageMiddleware implements MiddlewareInterface
 {
     public const FLASH_ATTRIBUTE = 'flash';
