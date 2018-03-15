@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +13,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/styles-482aa2add1.css">
+    <link rel="stylesheet" href="../css/styles-288837cc22.css">
 
     
 </head>
@@ -48,9 +49,12 @@
                 <ul class="nav navbar-nav">
                 
                 
+                
                     <li >
-                        <a href="..">Home</a>
+                        <a href="..">zend-expressive-flash</a>
                     </li>
+                
+                
                 
                 
                 
@@ -60,15 +64,20 @@
                 
                 
                 
+                
+                
                     <li class="active">
                         <a href="./">Flash Messages</a>
                     </li>
                 
                 
                 
+                
+                
                     <li >
                         <a href="../middleware/">Flash Message Middleware</a>
                     </li>
+                
                 
                 
                 </ul>
@@ -88,7 +97,7 @@
                 </li>
                 
                     <li>
-                        <a href="https://github.com/zendframework/zend-expressive-flash">
+                        <a href="https://github.com/zendframework/zend-expressive-flash/">
                             
                                 <i class="fa fa-github"></i>
                             
@@ -151,7 +160,7 @@ interface FlashMessagesInterface
     /**
      * Flash values scheduled for next request.
      */
-    const FLASH_NEXT = self::class . '::FLASH_NEXT';
+    public const FLASH_NEXT = self::class . '::FLASH_NEXT';
 
     /**
      * Create an instance from a session container.
@@ -200,6 +209,18 @@ interface FlashMessagesInterface
     public function getFlash(string $key, $default = null);
 
     /**
+     * Retrieve all flash values.
+     *
+     * Will return all values was set in a previous request, or if `flashNow()`
+     * was called in this request.
+     *
+     * WILL NOT return values set in the current request via `flash()`.
+     *
+     * @return array
+     */
+    public function getFlashes() : array;
+
+    /**
      * Clear all flash values.
      *
      * Affects the next and subsequent requests.
@@ -231,6 +252,9 @@ $flashMessages = $request-&gt;getAttribute('flash');</code></pre>
 
 <p>To retrieve a message you previously flashed:</p>
 <pre class="codehilite"><code class="language-php">$message = $flashMessages-&gt;getFlash($messageName);</code></pre>
+
+<p>To retrieve all messages you previously flashed:</p>
+<pre class="codehilite"><code class="language-php">$messages = $flashMessages-&gt;getFlashes();</code></pre>
 
 <h2 id="hops">Hops</h2>
 <p>Sometimes you may want a flash message to persist for longer than a single
@@ -328,6 +352,8 @@ optionally provide a <code>$hops</code> value as well.</p>
     <script>var base_url = '..';</script>
     <script src="../js/scripts-0b6185f4a5.js"></script>
     <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../search/require.js"></script>
+        <script src="../search/search.js"></script>
 
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
         <div class="modal-dialog">
@@ -369,5 +395,6 @@ optionally provide a <code>$hops</code> value as well.</p>
 </div>
 
 </body>
+
 
 </html>
