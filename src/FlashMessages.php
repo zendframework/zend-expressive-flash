@@ -1,13 +1,17 @@
 <?php
 /**
  * @see       https://github.com/zendframework/zend-expressive-flash for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (https://www.zend.com)
  * @license   https://github.com/zendframework/zend-expressive-flash/blob/master/LICENSE.md New BSD License
  */
+
+declare(strict_types=1);
 
 namespace Zend\Expressive\Flash;
 
 use Zend\Expressive\Session\SessionInterface;
+
+use function is_array;
 
 /**
  * Create, retrieve, and manipulate flash messages.
@@ -115,6 +119,21 @@ class FlashMessages implements FlashMessagesInterface
     public function getFlash(string $key, $default = null)
     {
         return $this->currentMessages[$key] ?? $default;
+    }
+
+    /**
+     * Retrieve all flash values.
+     *
+     * Will return all values was set in a previous request, or if `flashNow()`
+     * was called in this request.
+     *
+     * WILL NOT return values set in the current request via `flash()`.
+     *
+     * @return array
+     */
+    public function getFlashes() : array
+    {
+        return $this->currentMessages;
     }
 
     /**

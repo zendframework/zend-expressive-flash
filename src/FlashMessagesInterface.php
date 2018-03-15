@@ -1,9 +1,11 @@
 <?php
 /**
  * @see       https://github.com/zendframework/zend-expressive-flash for the canonical source repository
- * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2017 Zend Technologies USA Inc. (https://www.zend.com)
  * @license   https://github.com/zendframework/zend-expressive-flash/blob/master/LICENSE.md New BSD License
  */
+
+declare(strict_types=1);
 
 namespace Zend\Expressive\Flash;
 
@@ -14,7 +16,7 @@ interface FlashMessagesInterface
     /**
      * Flash values scheduled for next request.
      */
-    const FLASH_NEXT = self::class . '::FLASH_NEXT';
+    public const FLASH_NEXT = self::class . '::FLASH_NEXT';
 
     /**
      * Create an instance from a session container.
@@ -61,6 +63,18 @@ interface FlashMessagesInterface
      * @return mixed
      */
     public function getFlash(string $key, $default = null);
+
+    /**
+     * Retrieve all flash values.
+     *
+     * Will return all values was set in a previous request, or if `flashNow()`
+     * was called in this request.
+     *
+     * WILL NOT return values set in the current request via `flash()`.
+     *
+     * @return array
+     */
+    public function getFlashes() : array;
 
     /**
      * Clear all flash values.

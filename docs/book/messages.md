@@ -13,7 +13,7 @@ interface FlashMessagesInterface
     /**
      * Flash values scheduled for next request.
      */
-    const FLASH_NEXT = self::class . '::FLASH_NEXT';
+    public const FLASH_NEXT = self::class . '::FLASH_NEXT';
 
     /**
      * Create an instance from a session container.
@@ -62,6 +62,18 @@ interface FlashMessagesInterface
     public function getFlash(string $key, $default = null);
 
     /**
+     * Retrieve all flash values.
+     *
+     * Will return all values was set in a previous request, or if `flashNow()`
+     * was called in this request.
+     *
+     * WILL NOT return values set in the current request via `flash()`.
+     *
+     * @return array
+     */
+    public function getFlashes() : array;
+
+    /**
      * Clear all flash values.
      *
      * Affects the next and subsequent requests.
@@ -105,6 +117,12 @@ To retrieve a message you previously flashed:
 
 ```php
 $message = $flashMessages->getFlash($messageName);
+```
+
+To retrieve all messages you previously flashed:
+
+```php
+$messages = $flashMessages->getFlashes();
 ```
 
 ## Hops
