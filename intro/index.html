@@ -253,18 +253,15 @@ but want to display a message back to the user indicating a processing result.</
 <p>As an example, I may want to display a "Thank You" message to the user after
 successfully completing a form. I can do that with flash messages.</p>
 <p>When processing, I would create the message in my middleware:</p>
-<pre class="codehilite"><code class="language-php">$flashMessages-&gt;flash('form-complete', 'Thank you; your submission was recorded.');</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$flashMessages-&gt;flash('form-complete', 'Thank you; your submission was recorded.');</code></pre></p>
 <p>On the subsequent request, my middleware would pull that message:</p>
-<pre class="codehilite"><code class="language-php">$message = $flashMessages-&gt;getFlash('form-complete');</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$message = $flashMessages-&gt;getFlash('form-complete');</code></pre></p>
 <p>On any subsequent requests, the message is no longer available!</p>
 <h2 id="installation">Installation</h2>
 <p>To use the component, install via <a href="https://getcomposer.org">Composer</a>:</p>
-<pre class="codehilite"><code class="language-bash">$ composer require zendframework/zend-expressive-flash</code></pre>
-
+<p> <pre class=codehilite><code class=language-bash>$ composer require zendframework/zend-expressive-flash</code></pre></p>
 <blockquote>
-<h3 id="persistence-required">Persistence required</h3>
+<h3>Persistence required</h3>
 <p>zend-expressive-flash depends on zend-expressive-session, which defines
 abstractions around session containers &mdash; for use within applications for
 accessing session data &mdash; and session persistence (how the session data
@@ -306,7 +303,7 @@ be available soon.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-expressive-flash/edit/master/docs/intro.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-expressive-flash/edit/master/docs/book/intro.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

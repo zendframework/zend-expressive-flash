@@ -293,7 +293,7 @@ example, in the following, I specify:</p>
 <li>The request attribute <code>flash-messages</code> in which to store the flash messages
   container.</li>
 </ul>
-<pre class="codehilite"><code class="language-php">use Application\FlashMessages;
+<p> <pre class=codehilite><code class=language-php>use Application\FlashMessages;
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Flash\FlashMessageMiddleware;
 
@@ -307,16 +307,14 @@ class FlashMessageMiddlewareFactory
             'flash-messages'
         );
     }
-}</code></pre>
-
+}</code></pre></p>
 <p>Once you have created this factory, map the <code>FlashMessageMiddleware</code> to it in
 your dependency injection configuration:</p>
-<pre class="codehilite"><code class="language-php">'dependencies' =&gt; [
+<p> <pre class=codehilite><code class=language-php>'dependencies' =&gt; [
     'factories' =&gt; [
         \Zend\Expressive\Flash\FlashMessageMiddleware::class =&gt; FlashMessageMiddlewareFactory::class,
     ],
-],</code></pre>
-
+],</code></pre></p>
 <h2 id="piping-the-middleware">Piping the middleware</h2>
 <p>You may pipe this middleware either in your application pipeline
 (<code>config/pipeline.php</code>) or a routed middleware pipeline (<code>config/routes.php</code>, or
@@ -324,15 +322,14 @@ a delegator factory). When you do, you <strong>MUST</strong> register it <strong
 <code>Zend\Expressive\Session\SessionMiddleware</code> as it depends on that middleware for
 its session container.</p>
 <p>As an example within an application pipeline:</p>
-<pre class="codehilite"><code class="language-php">$app-&gt;pipe(\Zend\Expressive\Session\SessionMiddleware::class);
-$app-&gt;pipe(\Zend\Expressive\Flash\FlashMessageMiddleware::class);</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$app-&gt;pipe(\Zend\Expressive\Session\SessionMiddleware::class);
+$app-&gt;pipe(\Zend\Expressive\Flash\FlashMessageMiddleware::class);</code></pre></p>
 <p>Within a routed middleware definition:</p>
-<pre class="codehilite"><code class="language-php">$app-&gt;post('/user/login', [
+<p> <pre class=codehilite><code class=language-php>$app-&gt;post('/user/login', [
     \Zend\Expressive\Session\SessionMiddleware::class,
     \Zend\Expressive\Flash\FlashMessageMiddleware::class,
     LoginHandler::class,
-]);</code></pre>
+]);</code></pre></p>
 
 
 
@@ -362,7 +359,7 @@ $app-&gt;pipe(\Zend\Expressive\Flash\FlashMessageMiddleware::class);</code></pre
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-expressive-flash/edit/master/docs/middleware.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-expressive-flash/edit/master/docs/book/middleware.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>

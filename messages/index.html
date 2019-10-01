@@ -256,7 +256,7 @@
     <h1 id="flash-messages">Flash Messages</h1>
 <p>Flash messages are contained within a <code>Zend\Expressive\Flash\FlashMessagesInterface</code>
 implementation. That interface is defined as follows:</p>
-<pre class="codehilite"><code class="language-php">namespace Zend\Expressive\Flash;
+<p> <pre class=codehilite><code class=language-php>namespace Zend\Expressive\Flash;
 
 use Zend\Expressive\Session\SessionInterface;
 
@@ -281,7 +281,7 @@ interface FlashMessagesInterface
     /**
      * Set a flash value with the given key.
      *
-     * Flash values are accessible on the next "hop", where a hop is the
+     * Flash values are accessible on the next &quot;hop&quot;, where a hop is the
      * next time the session is accessed; you may pass an additional $hops
      * integer to allow access for more than one hop.
      *
@@ -336,8 +336,7 @@ interface FlashMessagesInterface
      * Prolongs any current flash messages for one more hop.
      */
     public function prolongFlash() : void;
-}</code></pre>
-
+}</code></pre></p>
 <p>A default implementation is provided in the class
 <code>Zend\Expressive\Flash\FlashMessages</code>, but you may implement the interface
 yourself if you have special needs that fall outside this standard
@@ -347,20 +346,16 @@ implementation.</p>
 to <code>flash</code>.</p>
 <h2 id="usage">Usage</h2>
 <p>First, pull the flash messages from the request:</p>
-<pre class="codehilite"><code class="language-php">$flashMessages = $request-&gt;getAttribute(FlashMessageMiddleware::FLASH_ATTRIBUTE);
+<p> <pre class=codehilite><code class=language-php>$flashMessages = $request-&gt;getAttribute(FlashMessageMiddleware::FLASH_ATTRIBUTE);
 
 // or
-$flashMessages = $request-&gt;getAttribute('flash');</code></pre>
-
+$flashMessages = $request-&gt;getAttribute('flash');</code></pre></p>
 <p>To create a flash message for the next request:</p>
-<pre class="codehilite"><code class="language-php">$flashMessages-&gt;flash($messageName, $messageValue);</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$flashMessages-&gt;flash($messageName, $messageValue);</code></pre></p>
 <p>To retrieve a message you previously flashed:</p>
-<pre class="codehilite"><code class="language-php">$message = $flashMessages-&gt;getFlash($messageName);</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$message = $flashMessages-&gt;getFlash($messageName);</code></pre></p>
 <p>To retrieve all messages you previously flashed:</p>
-<pre class="codehilite"><code class="language-php">$messages = $flashMessages-&gt;getFlashes();</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$messages = $flashMessages-&gt;getFlashes();</code></pre></p>
 <h2 id="hops">Hops</h2>
 <p>Sometimes you may want a flash message to persist for longer than a single
 request. As an example, with a multi-page form, you may want to store messages
@@ -370,23 +365,19 @@ the flash message will persist for. The default value is <code>1</code>, indicat
 single hop. This value is provided when you call <code>flash()</code> as an optional third
 argument.</p>
 <p>To have a message persist for three "hops", you might call <code>flash()</code> as follows:</p>
-<pre class="codehilite"><code class="language-php">$flashMessages-&gt;flash($messageName, $messageValue, 3);</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$flashMessages-&gt;flash($messageName, $messageValue, 3);</code></pre></p>
 <p>Sometimes you may want to ensure all messages persist for one more hop. To do
 that:</p>
-<pre class="codehilite"><code class="language-php">$flashMessages-&gt;prolongFlash();</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$flashMessages-&gt;prolongFlash();</code></pre></p>
 <p>If you want to clear all flash methods, no matter the number of hops:</p>
-<pre class="codehilite"><code class="language-php">$flashMessages-&gt;clearFlash();</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$flashMessages-&gt;clearFlash();</code></pre></p>
 <p>Note, however, that this clears them for the <em>next request</em>, not the current
 one.</p>
 <h2 id="accessing-messages-in-the-current-request">Accessing messages in the current request</h2>
 <p>When you create a flash message, it is available <em>in the next request</em>, but not
 the <em>current request</em>. If you want access to it in the current request as well,
 use the <code>flashNow()</code> method instead of <code>flash()</code>:</p>
-<pre class="codehilite"><code class="language-php">$flashMessages-&gt;flashNow($messageName, $messageValue);</code></pre>
-
+<p> <pre class=codehilite><code class=language-php>$flashMessages-&gt;flashNow($messageName, $messageValue);</code></pre></p>
 <p>The signature of this method is the same as for <code>flash()</code>, and allows you to
 optionally provide a <code>$hops</code> value as well.</p>
 
@@ -422,7 +413,7 @@ optionally provide a <code>$hops</code> value as well.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-expressive-flash/edit/master/docs/messages.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-expressive-flash/edit/master/docs/book/messages.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>
